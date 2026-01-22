@@ -34,3 +34,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+ ###color Code
+
+| Purpose                      | Tailwind Class  | Hex Code      |
+| ---------------------------- | --------------- | ------------- |
+| Primary Pink (text/logo)     | `text-pink-500` | **`#EC4899`** |
+| Light Pink (buttons bg)      | `bg-pink-100`   | **`#FCE7F3`** |
+| Medium Pink (hover bg)       | `bg-pink-300`   | **`#F9A8D4`** |
+| Dark Pink (text)             | `text-pink-700` | **`#BE185D`** |
+| Pink Button BG (mobile icon) | `bg-pink-200`   | **`#FBCFE8`** |
+| Pink Icon/Text               | `text-pink-800` | **`#9D174D`** |
+
+
