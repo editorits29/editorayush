@@ -5,11 +5,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 type Testimonial = {
-  id: number;
-  name: string;
-  role: string;
-  message: string;
-  imageUrl?: string;
+  id: string;
+  title: string;
+  url: string;
 };
 
 export default function Testimonial() {
@@ -17,14 +15,10 @@ export default function Testimonial() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/testimonials")
+    fetch("http://127.0.0.1:8000/api/images/")
       .then((res) => res.json())
       .then((res) => {
-        if (Array.isArray(res)) {
-          setData(res);
-        } else {
-          setData([]);
-        }
+        setData(Array.isArray(res) ? res : []);
       })
       .catch(() => setData([]))
       .finally(() => setLoading(false));
@@ -39,19 +33,19 @@ export default function Testimonial() {
         <div className="flex items-center justify-center gap-2 mb-3">
           <span className="h-2.5 w-2.5 rounded-full bg-pink-600 animate-pulse" />
           <p className="text-sm font-semibold tracking-wide text-gray-600 uppercase">
-            Testimonials
+            Gallery
           </p>
         </div>
 
         <p className="text-center text-3xl font-extrabold text-gray-900 mb-10 leading-tight">
-          What our premium clients <br className="hidden sm:block" />
-          say about my work
+          Visual work from <br className="hidden sm:block" />
+          our recent projects
         </p>
 
         {/* Content */}
         {showLoading ? (
           <p className="text-center text-gray-500">
-            Loading testimonials…
+            Loading images…
           </p>
         ) : (
           <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto px-4">
@@ -71,41 +65,29 @@ export default function Testimonial() {
                   duration-300
                 "
               >
-                {/* User */}
+                {/* Image */}
                 <div className="flex items-center gap-4 mb-4">
-                  {item.imageUrl ? (
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.name}
-                      width={52}
-                      height={52}
-                      className="rounded-full object-cover ring-2 ring-pink-100"
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).style.display =
-                          "none";
-                      }}
-                    />
-                  ) : (
-                    <div className="h-13 w-13 rounded-full bg-gradient-to-br from-pink-500 to-orange-400 flex items-center justify-center text-white font-bold text-lg shadow-md">
-                      {item.name.charAt(0)}
-                    </div>
-                  )}
+                  <Image
+                    src={item.url}
+                    alt={item.title}
+                    width={52}
+                    height={52}
+                    className="rounded-full object-cover ring-2 ring-pink-100"
+                  />
 
                   <div>
                     <p className="font-semibold text-gray-900 leading-none">
-                      {item.name}
+                      {item.title}
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
-                      {item.role}
+                      Cloudinary Asset
                     </p>
                   </div>
                 </div>
 
-                {/* Message */}
-                <p className="text-sm text-gray-700 leading-relaxed relative">
-                  <span className="text-pink-400 text-xl font-serif mr-1">“</span>
-                  {item.message}
-                  <span className="text-pink-400 text-xl font-serif ml-1">”</span>
+                {/* Caption */}
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  This visual asset is part of our curated editing portfolio.
                 </p>
               </li>
             ))}

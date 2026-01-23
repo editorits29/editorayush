@@ -84,21 +84,21 @@ export default function LandingPage() {
         <div className="flex flex-row gap-4 justify-center">
           <div className="flex">
             <Image
-              src="green-star-sparkle-17541.svg"
+              src="/green-star-sparkle-17541.svg"
               width={22}
               height={12}
               alt="customer profile"
               priority
             />
             <Image
-              src="green-star-sparkle-17541.svg"
+              src="/green-star-sparkle-17541.svg"
               width={22}
               height={12}
               alt="customer profile"
               priority
             />
             <Image
-              src="green-star-sparkle-17541.svg"
+              src="/green-star-sparkle-17541.svg"
               width={22}
               height={12}
               alt="customer profile"

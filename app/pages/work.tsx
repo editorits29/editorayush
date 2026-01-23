@@ -7,7 +7,7 @@ type Video = {
   id: string;
   title: string;
   url: string;
-  thumbnail: string;
+  thumbnail?: string;
 };
 
 export default function Work() {
@@ -19,7 +19,7 @@ export default function Work() {
   useEffect(() => {
     const loadVideos = async () => {
       try {
-        const res = await fetch("/api/videos");
+        const res = await fetch("http://127.0.0.1:8000/api/videos/");
         const data = await res.json();
         setVideos(data ?? []);
       } catch (err) {
@@ -35,12 +35,15 @@ export default function Work() {
 
   const currentVideo = videos[currentIndex] ?? null;
 
-  const nextVideo = () =>
+  const nextVideo = () => {
+  if(!videos.length) return;
     setCurrentIndex((i) => (i + 1) % videos.length);
+};
 
-  const prevVideo = () =>
+  const prevVideo = () => {
+  if(!videos.length) return;
     setCurrentIndex((i) => (i - 1 + videos.length) % videos.length);
-
+};
   return (
     <section className="w-full flex flex-col items-center gap-2 px-2 py-1">
       <div className="relative w-full max-w-3xl rounded-3xl bg-white/70 backdrop-blur-xl shadow-xl border border-white/40 p-6 md:p-8">
@@ -64,7 +67,7 @@ export default function Work() {
                 key={currentVideo.id}
                 controls
                 preload="metadata"
-                poster={currentVideo.thumbnail}
+                poster={currentVideo.thumbnail || undefined}
                 className="w-full h-full object-cover"
               >
                 <source src={currentVideo.url} type="video/mp4" />
