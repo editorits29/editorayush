@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import api from "../config/axios";
 
 type Testimonial = {
   id: string;
@@ -15,13 +16,19 @@ export default function Testimonial() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/images/")
-      .then((res) => res.json())
-      .then((res) => {
-        setData(Array.isArray(res) ? res : []);
-      })
-      .catch(() => setData([]))
-      .finally(() => setLoading(false));
+    const loadImages = async () => {
+      try {
+        const res = await api.get<Testimonial[]>("/api/images/");
+        setData(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        console.error(err);
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadImages();
   }, []);
 
   const showLoading = loading || data.length === 0;

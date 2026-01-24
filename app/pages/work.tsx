@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import api from "../config/axios";
 
 type Video = {
   id: string;
@@ -19,9 +20,8 @@ export default function Work() {
   useEffect(() => {
     const loadVideos = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/videos/");
-        const data = await res.json();
-        setVideos(data ?? []);
+        const res = await api.get<Video[]>("/api/videos/");
+        setVideos(res.data ?? []);
       } catch (err) {
         console.error(err);
         setVideos([]);
@@ -36,14 +36,15 @@ export default function Work() {
   const currentVideo = videos[currentIndex] ?? null;
 
   const nextVideo = () => {
-  if(!videos.length) return;
+    if (!videos.length) return;
     setCurrentIndex((i) => (i + 1) % videos.length);
-};
+  };
 
   const prevVideo = () => {
-  if(!videos.length) return;
+    if (!videos.length) return;
     setCurrentIndex((i) => (i - 1 + videos.length) % videos.length);
-};
+  };
+
   return (
     <section className="w-full flex flex-col items-center gap-2 px-2 py-1">
       <div className="relative w-full max-w-3xl rounded-3xl bg-white/70 backdrop-blur-xl shadow-xl border border-white/40 p-6 md:p-8">
