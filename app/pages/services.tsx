@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useState } from "react";
@@ -70,7 +68,7 @@ export default function Services() {
   };
 
   return (
-    <div className="flex justify-center items-center p-4">
+    <div className="flex justify-center items-center p-1">
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-3xl shadow-xl p-6 w-full max-w-3xl space-y-6"

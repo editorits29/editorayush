@@ -15,6 +15,8 @@ export default function Work() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasInteracted, setHasInteracted] = useState(false);
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -33,6 +35,16 @@ export default function Work() {
     loadVideos();
   }, []);
 
+  // ensure autoplay when video changes
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.play().catch(() => {});
+    setHasInteracted(false);
+  }, [currentIndex]);
+
   const currentVideo = videos[currentIndex] ?? null;
 
   const nextVideo = () => {
@@ -45,8 +57,25 @@ export default function Work() {
     setCurrentIndex((i) => (i - 1 + videos.length) % videos.length);
   };
 
+  const handleVideoClick = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // first interaction → unmute + play
+    if (!hasInteracted) {
+      video.muted = false;
+      video.play();
+      setHasInteracted(true);
+      return;
+    }
+
+    // later clicks → toggle play/pause
+    if (video.paused) video.play();
+    else video.pause();
+  };
+
   return (
-    <section className="w-full flex flex-col items-center gap-2 px-2 py-1">
+    <section className="w-full flex flex-col items-center px-2 py-1">
       <div className="relative w-full max-w-3xl rounded-3xl bg-white/70 backdrop-blur-xl shadow-xl border border-white/40 p-6 md:p-8">
         <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-pink-200/40 via-purple-200/30 to-blue-200/40 blur-2xl" />
 
@@ -62,21 +91,29 @@ export default function Work() {
           </div>
         ) : (
           <div className="relative rounded-xl overflow-hidden shadow-2xl bg-black">
-            <div className="aspect-video">
+            <div className="aspect-video relative">
               <video
                 ref={videoRef}
                 key={currentVideo.id}
-                controls
-                preload="metadata"
-                poster={currentVideo.thumbnail || undefined}
-                className="w-full h-full object-cover"
-              >
-                <source src={currentVideo.url} type="video/mp4" />
-              </video>
-            </div>
+                src={currentVideo.url}
+                poster={currentVideo.thumbnail}
+                className="w-full h-full object-contain object-center cursor-pointer"
+                loop
+                muted
+                autoPlay
+                playsInline
+                onClick={handleVideoClick}
+              />
 
-            <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm">
-              {currentVideo.title}
+              {/* Tap for sound overlay */}
+              {!hasInteracted && (
+                <div
+                  onClick={handleVideoClick}
+                  className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-sm md:text-base font-medium backdrop-blur-sm cursor-pointer transition"
+                >
+                  🔊 Tap for sound
+                </div>
+              )}
             </div>
 
             <button

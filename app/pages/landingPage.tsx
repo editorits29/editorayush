@@ -65,10 +65,14 @@ export default function LandingPage() {
               height={22}
               alt="rating"
               priority
-              style={false ? {
-                filter:
-                  "brightness(0.5) sepia(1) hue-rotate(-90deg) saturate(7)",
-              }:undefined}
+              style={
+                false
+                  ? {
+                      filter:
+                        "brightness(0.5) sepia(1) hue-rotate(-90deg) saturate(7)",
+                    }
+                  : undefined
+              }
               className="drop-shadow-sm"
             />
           </div>
@@ -81,26 +85,29 @@ export default function LandingPage() {
             Quality over quantity. Always.
           </p>
         </div>
-        <div className="flex flex-row gap-4 justify-center">
-          <div className="flex">
+        <div className="flex flex-row gap-4 justify-center items-center">
+          <div className="relative flex">
             <Image
-              src="/green-star-sparkle-17541.svg"
-              width={22}
-              height={12}
+              className="z-0 rounded-full h-6 w-6 border-2 border-white"
+              src="https://cdn.pixabay.com/photo/2024/07/30/12/36/man-8932177_1280.png"
+              width={24}
+              height={24}
               alt="customer profile"
               priority
             />
             <Image
-              src="/green-star-sparkle-17541.svg"
-              width={22}
-              height={12}
+              className="z-1 rounded-full h-6 w-6 border-2 border-white -ml-2"
+              src="https://static.boredpanda.com/blog/wp-content/uploads/2020/08/H-5f4b968056d2c__880.jpg"
+              width={24}
+              height={24}
               alt="customer profile"
               priority
             />
             <Image
-              src="/green-star-sparkle-17541.svg"
-              width={22}
-              height={12}
+              className="z-2 rounded-full h-6 w-6 border-2 border-white -ml-2"
+              src="https://cdn.pixabay.com/photo/2014/09/17/11/47/man-449406_1280.jpg"
+              width={24}
+              height={24}
               alt="customer profile"
               priority
             />

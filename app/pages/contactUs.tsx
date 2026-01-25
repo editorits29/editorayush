@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { SiCalendly } from "react-icons/si";
 const faqs = [
   {
     question: "What is the editing process?",
@@ -39,7 +40,7 @@ export default function ContactUs() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="w-full mt-0 mb-8 p-2 flex justify-center">
+    <div className="w-full mt-0 mb-2 p-1 flex justify-center">
       <div className="bg-white/80 backdrop-blur-lg w-full max-w-3xl rounded-2xl shadow-lg p-6">
         {/* Header */}
         <div className="flex items-center py-2 justify-center space-x-2">
@@ -48,16 +49,53 @@ export default function ContactUs() {
         </div>
 
         <div className="border border-gray-200 bg-pink-600/20 backdrop-blur-sm m-2 rounded-3xl p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-gray-900 text-center sm:text-left">
               Have a question? Let's discuss it now!
             </h2>
-            <a
-              href="/book-appointment"
-              className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-black text-white text-sm font-semibold hover:bg-gray-800 transition whitespace-nowrap"
-            >
-              Book an Appointment
-            </a>
+
+            {/* Buttons */}
+            <div className="flex flex-col items-center gap-3">
+              {/* Primary CTA */}
+              <a
+                href="/book-appointment"
+                className="flex items-center justify-center px-3 py-3 m-1 rounded-full
+        bg-black text-white text-base font-semibold
+        hover:bg-gray-800 transition"
+              >
+                <SiCalendly className="text-lg w-8 h-8 mr-3 p-1 " />   Book an Appointment
+              </a>
+
+              {/* Social buttons */}
+              <div className="flex gap-3">
+                <a
+                  href="https://www.instagram.com/its_editor_746080/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-full
+          bg-gray-400 text-white text-sm font-semibold shadow-md
+          hover:scale-105 transition-transform"
+                >
+                  <div className="p-1 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600">
+                    <FaInstagram className="text-lg" />
+                  </div>
+                  Instagram
+                </a>
+
+                <a
+                  href="/404"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-2 py-2 rounded-full
+          bg-gray-400 text-white text-sm font-semibold shadow-md
+          hover:scale-105 transition-transform"
+                >
+                  <FaWhatsapp className="bg-green-600 h-7 w-7 rounded-full text-lg p-1" />
+                  WhatsApp
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
