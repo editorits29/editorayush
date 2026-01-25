@@ -47,8 +47,8 @@ function ImageItem({
         mx-auto
         rounded-3xl
         overflow-hidden
-        bg-white
-        shadow-lg
+        bg-black
+        shadow-3xl
         will-change-transform
       "
     >
@@ -81,12 +81,12 @@ export default function Testimonial() {
   }, []);
 
   return (
-    <section className="flex justify-center py-24 bg-neutral-50">
+    <section className="flex justify-center py-2">
       <div
         ref={containerRef}
         className="
-          w-full
-          max-w-3xl
+          
+          w-3xl
           rounded-3xl
           bg-gradient-to-b
           from-pink-50/40

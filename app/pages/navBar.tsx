@@ -7,10 +7,9 @@ import { useState } from "react";
 const navList = [
   { name: "Main Page", id: "home" },
   { name: "Work", id: "work" },
-  { name: "Service", id: "service" },
   { name: "Testimonial", id: "testimonial" },
+  { name: "Service", id: "service" },
   { name: "Contact Us", id: "contact" },
-  { name: "( . ) ( . )", id: "boobies" },
 ];
 
 export default function NavBar() {
