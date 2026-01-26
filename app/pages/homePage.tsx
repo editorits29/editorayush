@@ -19,8 +19,7 @@ export default function Homepage() {
         <a href="https://x-dev.site" target="_blank" rel="noopener noreferrer">
           Made By{" "}
           <span className="underline decoration-green-600 text-pink-600">
-            X.developer
-          </span>
+            X.developer</span>{" "}💕
         </a>
       </p>
     </div>

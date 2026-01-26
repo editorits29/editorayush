@@ -131,6 +131,19 @@ export default function Work() {
             </button>
           </div>
         )}
+	<div className="flex items-center pt-14  gap-2">
+            <span className="h-3 w-3 rounded-full bg-pink-600" />
+            <p className="text-sm font-medium text-gray-600">
+              Process
+            </p>
+	    <div>
+	    <ul>
+	    <li><h1>Submit Rquest</h1><p></p></li>
+	    <li><h1></h1><p></p></li>
+	    <li><h1></h1><p></p></li>
+	    </ul>
+	    </div>
+          </div>
       </div>
     </section>
   );

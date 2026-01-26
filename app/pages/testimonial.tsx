@@ -18,37 +18,40 @@ type ImageItemProps = {
   scrollYProgress: any;
 };
 
-function ImageItem({
-  item,
-  index,
-  total,
-  scrollYProgress,
-}: ImageItemProps) {
+function ImageItem({ item, index, total, scrollYProgress }: ImageItemProps) {
   const start = index / total;
   const end = start + 1 / total;
 
-  // ✅ hooks are now legal
   const scale = useTransform(
     scrollYProgress,
     [start, (start + end) / 2, end],
-    [0.85, 1, 0.85]
+    [0.9, 1, 0.9]
   );
 
   const opacity = useTransform(
     scrollYProgress,
     [start, (start + end) / 2, end],
-    [0.6, 1, 0.6]
+    [0.7, 1, 0.7]
+  );
+
+  const boxShadow = useTransform(
+    scrollYProgress,
+    [start, (start + end) / 2, end],
+    [
+      "0 10px 25px rgba(0,0,0,0.12)",
+      "0 25px 50px rgba(0,0,0,0.28)",
+      "0 10px 25px rgba(0,0,0,0.12)",
+    ]
   );
 
   return (
     <motion.div
-      style={{ scale, opacity }}
+      style={{ scale, opacity, boxShadow }}
       className="
         mx-auto
         rounded-3xl
         overflow-hidden
         bg-black
-        shadow-3xl
         will-change-transform
       "
     >
@@ -81,30 +84,60 @@ export default function Testimonial() {
   }, []);
 
   return (
-    <section className="flex justify-center py-2">
-      <div
-        ref={containerRef}
-        className="
-          
-          w-3xl
-          rounded-3xl
-          bg-gradient-to-b
-          from-pink-50/40
-          to-white
-          px-6
-          py-20
-          space-y-24
-        "
-      >
-        {data.map((item, index) => (
-          <ImageItem
-            key={item.id}
-            item={item}
-            index={index}
-            total={data.length}
-            scrollYProgress={scrollYProgress}
-          />
-        ))}
+    <section
+      className="
+        w-full
+        flex
+        justify-center
+        py-1
+      "
+    >
+      {/* Page container */}
+      <div className="w-3xl bg-gradient-to-b
+        from-gray-200
+        via-pink-50
+        to-pink-100
+	rounded-3xl
+flex flex-col items-center">
+        {/* Title */}
+        <div className="flex flex-col items-center gap-3 mt-20 mb-16 text-center">
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded-full bg-pink-600" />
+            <p className="text-sm font-medium text-gray-600">
+              Testimonial
+            </p>
+          </div>
+
+          <h2 className="text-3xl font-bold text-black max-w-xl">
+            What our premium clients<br/> are saying about us
+          </h2>
+        </div>
+
+        {/* Gallery */}
+        <div
+          ref={containerRef}
+          className="
+            w-full
+            rounded-3xl
+            px-6
+            py-5
+            space-y-24
+            flex
+            flex-col
+            items-center
+            backdrop-blur-sm
+          "
+        >
+          {data.map((item, index) => (
+            <ImageItem
+              key={item.id}
+              item={item}
+              index={index}
+              total={data.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

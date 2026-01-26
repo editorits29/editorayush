@@ -64,7 +64,8 @@ export default function ContactUs() {
         bg-black text-white text-base font-semibold
         hover:bg-gray-800 transition"
               >
-                <SiCalendly className="text-lg w-8 h-8 mr-3 p-1 " />   Book an Appointment
+                <SiCalendly className="text-lg w-8 h-8 mr-3 p-1 " /> Book an
+                Appointment
               </a>
 
               {/* Social buttons */}
