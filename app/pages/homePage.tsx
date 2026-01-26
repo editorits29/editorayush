@@ -10,11 +10,21 @@ export default function Homepage() {
   return (
     <div className="flex flex-col h-auto bg-gray-200 w-full">
       <NavBar />
+      <section id="landingpage">
       <LandingPage />
+      </section>
+      <section id="work">
       <Work />
+      </section>
+      <section id="testimonial">
       <Testimonial />
+      </section>
+      <section id="service">
       <Services />
+      </section>
+      <section id="contact">
       <ContactUs />
+      </section>
       <p className="text-black text-center p-3 m-3 text-xs ">
         <a href="https://x-dev.site" target="_blank" rel="noopener noreferrer">
           Made By{" "}

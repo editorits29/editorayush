@@ -41,15 +41,16 @@ function ImageItem({ item, index, total, scrollYProgress }: ImageItemProps) {
         mx-auto
         rounded-3xl
         overflow-hidden
+        relative
         will-change-transform
       "
     >
       <Image
         src={item.url}
         alt="Gallery image"
-        width={900}
-        height={600}
-        className="w-full h-[70vh] object-contain"
+        width={1000}
+        height={1000}
+        className="w-auto h-auto max-h-[70vh] object-contain"
       />
     </motion.div>
   );
@@ -74,7 +75,6 @@ export default function Testimonial() {
 
   return (
     <section className="w-full flex justify-center py-1">
-      {/* Page container */}
       <div
         className="
           w-3xl
@@ -88,7 +88,6 @@ export default function Testimonial() {
           items-center
         "
       >
-        {/* Title */}
         <div className="flex flex-col items-center gap-3 mt-20 mb-16 text-center">
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-pink-600" />
@@ -104,7 +103,6 @@ export default function Testimonial() {
           </h2>
         </div>
 
-        {/* Gallery */}
         <div
           ref={containerRef}
           className="
