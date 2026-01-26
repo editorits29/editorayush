@@ -74,7 +74,7 @@ export default function Testimonial() {
   }, []);
 
   return (
-    <section className="w-full flex justify-center py-1">
+    <section className="w-full flex justify-center py-10">
       <div
         className="
           w-3xl
@@ -88,7 +88,7 @@ export default function Testimonial() {
           items-center
         "
       >
-        <div className="flex flex-col items-center gap-3 mt-20 mb-16 text-center">
+        <div className="flex flex-col items-center gap-3 mt-5 mb-5 text-center">
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-pink-600" />
             <p className="text-sm font-medium text-gray-600">
