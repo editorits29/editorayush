@@ -34,24 +34,13 @@ function ImageItem({ item, index, total, scrollYProgress }: ImageItemProps) {
     [0.7, 1, 0.7]
   );
 
-  const boxShadow = useTransform(
-    scrollYProgress,
-    [start, (start + end) / 2, end],
-    [
-      "0 10px 25px rgba(0,0,0,0.12)",
-      "0 25px 50px rgba(0,0,0,0.28)",
-      "0 10px 25px rgba(0,0,0,0.12)",
-    ]
-  );
-
   return (
     <motion.div
-      style={{ scale, opacity, boxShadow }}
+      style={{ scale, opacity }}
       className="
         mx-auto
         rounded-3xl
         overflow-hidden
-        bg-black
         will-change-transform
       "
     >
@@ -84,21 +73,21 @@ export default function Testimonial() {
   }, []);
 
   return (
-    <section
-      className="
-        w-full
-        flex
-        justify-center
-        py-1
-      "
-    >
+    <section className="w-full flex justify-center py-1">
       {/* Page container */}
-      <div className="w-3xl bg-gradient-to-b
-        from-gray-200
-        via-pink-50
-        to-pink-100
-	rounded-3xl
-flex flex-col items-center">
+      <div
+        className="
+          w-3xl
+          bg-gradient-to-b
+          from-gray-200
+          via-pink-50
+          to-pink-100
+          rounded-3xl
+          flex
+          flex-col
+          items-center
+        "
+      >
         {/* Title */}
         <div className="flex flex-col items-center gap-3 mt-20 mb-16 text-center">
           <div className="flex items-center gap-2">
@@ -109,7 +98,9 @@ flex flex-col items-center">
           </div>
 
           <h2 className="text-3xl font-bold text-black max-w-xl">
-            What our premium clients<br/> are saying about us
+            What our premium clients
+            <br />
+            are saying about us
           </h2>
         </div>
 
@@ -120,8 +111,8 @@ flex flex-col items-center">
             w-full
             rounded-3xl
             px-6
-            py-5
-            space-y-24
+            py-0
+            space-y-0
             flex
             flex-col
             items-center

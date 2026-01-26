@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState, useRef } from "react";
@@ -131,19 +130,38 @@ export default function Work() {
             </button>
           </div>
         )}
-	<div className="flex items-center pt-14  gap-2">
-            <span className="h-3 w-3 rounded-full bg-pink-600" />
-            <p className="text-sm font-medium text-gray-600">
-              Process
-            </p>
-	    <div>
-	    <ul>
-	    <li><h1>Submit Rquest</h1><p></p></li>
-	    <li><h1></h1><p></p></li>
-	    <li><h1></h1><p></p></li>
-	    </ul>
-	    </div>
+        <div className="flex justify-center flex-col items-center pt-14  gap-2">
+          <div className="w-full flex justify-center gap-2 items-center text-center">
+            <div className="h-3 w-3 rounded-full bg-pink-600"></div>
+            <p className="text-sm font-medium text-gray-600">Process</p>
           </div>
+          <div className="text-lg text-left text-gray-400">
+            <h3 className="text-2xl text-black pb-3">How ous video editing service works for you</h3>
+            <ul className="flex gap-2 flex-col">
+              <li>
+                <h1 className="text-black">
+                  <span className="text-black">01</span>{" "}Submit Rquest
+                </h1>
+                <p></p>Share your video needs and project detials to get
+                started.
+              </li>
+              <li>
+                <h1 className="text-black">
+                  <span className="text-black">02</span>{" "}Video Editing
+                </h1>
+                <p>
+                  Our team edits and you can request revision to perfect it.
+                </p>
+              </li>
+              <li>
+                <h1 className="text-black">
+                  <span className="text-black">03</span>{" "}Final Delivery
+                </h1>
+                <p>Recive the final video with all nacessary adjustments.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   );

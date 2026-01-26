@@ -59,10 +59,12 @@ export default function ContactUs() {
             <div className="flex flex-col items-center gap-3">
               {/* Primary CTA */}
               <a
-                href="/book-appointment"
-                className="flex items-center justify-center px-3 py-3 m-1 rounded-full
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://calendly.com/editorits29/30min"
+                className="hover:bg-gray-800 transition flex items-center justify-center px-3 py-3 m-1 rounded-full
         bg-black text-white text-base font-semibold
-        hover:bg-gray-800 transition"
+        hover:scale-105 transition-transform"
               >
                 <SiCalendly className="text-lg w-8 h-8 mr-3 p-1 " /> Book an
                 Appointment
@@ -85,7 +87,7 @@ export default function ContactUs() {
                 </a>
 
                 <a
-                  href="/404"
+                  href="https://wa.me/919263542782"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-2 py-2 rounded-full
