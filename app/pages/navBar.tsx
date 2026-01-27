@@ -1,9 +1,8 @@
-
 // app/pages/navBar.tsx
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const navList = [
   { name: "Main Page", id: "landingpage" },
@@ -15,12 +14,43 @@ const navList = [
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [typedText, setTypedText] = useState("");
+  const fullText = "It's-EditorAyush.";
 
   const handleScroll = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    let i = 0;
+    let isDeleting = false;
+
+    const interval = setInterval(() => {
+      if (!isDeleting) {
+        // Typing
+        setTypedText(fullText.slice(0, i + 1));
+        i++;
+
+        if (i === fullText.length) {
+          setTimeout(() => {
+            isDeleting = true;
+          }, 1200); // pause after full typing
+        }
+      } else {
+        // Deleting
+        setTypedText(fullText.slice(0, i - 1));
+        i--;
+
+        if (i === 0) {
+          isDeleting = false;
+        }
+      }
+    }, 100); // speed control
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <nav className="w-full flex justify-center pb-1 py-2 sticky top-0 z-50">
@@ -29,8 +59,11 @@ export default function NavBar() {
           {/* Logo */}
           <div className="tracking-wide">
             <p className="font-creative text-xs font-bold text-gray-600">
-              It's-Editor
-              <span className="font-serif text-base italic">Ayush</span>.
+              {typedText.includes("It's-Editor") && "It's-Editor"}
+              <span className="font-serif text-base italic">
+                {typedText.replace("It's-Editor", "").replace(".", "")}
+              </span>
+              {typedText.endsWith(".") && "."}
             </p>
           </div>
 
