@@ -1,9 +1,8 @@
 
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
 import api from "../config/axios";
 
 type Testimonial = {
@@ -11,83 +10,18 @@ type Testimonial = {
   url: string;
 };
 
-type ImageItemProps = {
-  item: Testimonial;
-  index: number;
-  total: number;
-  scrollYProgress: any;
-};
-
-function ImageItem({ item, index, total, scrollYProgress }: ImageItemProps) {
-  const start = index / total;
-  const end = (index + 1) / total;
-  const center = (start + end) / 2;
-
-  // Cute, gentle motion
-  const scale = useTransform(
-    scrollYProgress,
-    [start, center, end],
-    [0.92, 1.02, 0.92]
-  );
-
-  const opacity = useTransform(
-    scrollYProgress,
-    [start, center, end],
-    [0.6, 1, 0.6]
-  );
-
-  const y = useTransform(
-    scrollYProgress,
-    [start, center, end],
-    [30, 0, -30]
-  );
-
-  return (
-    <div className="h-screen flex items-center justify-center snap-center">
-      <motion.div
-        style={{ scale, opacity, y }}
-        className="
-          mx-auto
-          rounded-3xl
-          overflow-hidden
-          relative
-          will-change-transform
-        "
-      >
-        <Image
-          src={item.url}
-          alt="Gallery image"
-          width={1000}
-          height={1000}
-          className="
-            w-auto
-            h-auto
-            max-h-[80vh]
-            max-w-[90vw]
-            object-contain
-          "
-          priority={index === 0}
-        />
-      </motion.div>
-    </div>
-  );
-}
-
 export default function Testimonial() {
   const [data, setData] = useState<Testimonial[]>([]);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const loadImages = async () => {
       try {
         const res = await api.get<Testimonial[]>("/api/images/");
-        setData(Array.isArray(res.data) ? res.data : []);
-      } catch (e) {
+        const images = Array.isArray(res.data) ? res.data : [];
+        setData(images);
+        setActiveIndex(Math.floor(images.length / 2));
+      } catch {
         setData([]);
       }
     };
@@ -95,57 +29,95 @@ export default function Testimonial() {
   }, []);
 
   return (
-    <section className="w-full flex justify-center py-8">
-      <div
-        className="
-          w-3xl
-          bg-gradient-to-b
-          from-gray-100
-          via-pink-50
-          to-pink-100
-          rounded-3xl
-          flex
-          flex-col
-          items-center
-          pt-6
-        "
-      >
-        {/* Header */}
-        <div className="flex flex-col items-center gap-2 mb-4 text-center">
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-pink-500" />
-            <p className="text-sm font-medium text-gray-600">
-              Testimonial
+    /* FULL WIDTH */
+    <section className="w-full py-1 flex justify-center overflow-hidden">
+      {/* 3XL CONTAINER */}
+      <div className="w-3xl px-8 rounded-3xl bg-gradient-to-b from-white via-pink-50 to-pink-100">
+        <div className="relative px-5 py-10">
+
+          {/* Header */}
+          <div className="text-center mb-5">
+	  <div className="flex gap-3 items-center justify-center">
+	  <div className="h-3 w-3 rounded-full bg-pink-600"></div>
+            <p className="text-sm font-medium tracking-wide text-pink-500">
+              TESTIMONIALS
             </p>
+	    </div>
+            <h2 className="mt-3 text-3xl font-bold text-slate-900">
+              What premium clients say
+            </h2>
           </div>
 
-          <h2 className="text-2xl font-bold text-black max-w-md">
-            What our premium clients
-            <br />
-            are saying about us
-          </h2>
-        </div>
+          {/* Slider */}
+          <div className="relative h-[520px] flex items-center justify-center">
 
-        {/* Page scroll snap area (NO inner scroll) */}
-        <div
-          ref={containerRef}
-          className="
-            w-full
-            flex
-            flex-col
-            snap-y
-            snap-mandatory
-          "
-        >
-          {data.map((item, index) => (
-            <ImageItem
-              key={item.id}
-              item={item}
-              index={index}
-              total={data.length}
-              scrollYProgress={scrollYProgress}
-            />
-          ))}
+            {data.map((item, index) => {
+              const offset = index - activeIndex;
+
+              if (Math.abs(offset) > 2) return null;
+
+              const translateX =
+                offset === 0
+                  ? 0
+                  : offset === -1
+                  ? -160
+                  : offset === 1
+                  ? 160
+                  : offset < 0
+                  ? -280
+                  : 280;
+
+              const scale =
+                offset === 0 ? 1 : Math.abs(offset) === 1 ? 0.84 : 0.68;
+
+              const opacity =
+                offset === 0 ? 1 : Math.abs(offset) === 1 ? 0.9 : 0;
+
+              const isActive = offset === 0;
+
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => setActiveIndex(index)}
+                  className={`absolute transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]
+                    ${isActive ? "cursor-default" : "cursor-pointer"}
+                  `}
+                  style={{
+                    transform: `translateX(${translateX}px) scale(${scale})`,
+                    zIndex: 50 - Math.abs(offset) * 10,
+                    opacity,
+                  }}
+                >
+                  <article className="w-[360px] h-[480px] bg-white rounded-3xl shadow-2xl p-6 flex flex-col">
+
+                    {/* Image */}
+                    <div className="relative w-full h-60 rounded-2xl overflow-hidden">
+                      <Image
+                        src={item.url}
+                        alt="testimonial"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="mt-6 text-xl font-bold text-slate-900">
+                      Focus on the big picture
+                    </h3>
+
+                    <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                      Many desktop publishing packages and modern editors
+                      prioritize structure and clarity over noise.
+                    </p>
+
+                    <span className="mt-auto text-indigo-500 font-medium text-sm">
+                      Read more →
+                    </span>
+                  </article>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
