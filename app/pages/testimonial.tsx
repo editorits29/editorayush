@@ -80,7 +80,7 @@ export default function Testimonial() {
               offset === 0
                 ? {
                     transform: "translateX(0%) scale(1)",
-                    zIndex: 50,
+                    zIndex: 45,
                   }
                 : offset === -1
                 ? {
