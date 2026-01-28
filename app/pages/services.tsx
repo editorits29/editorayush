@@ -71,7 +71,7 @@ export default function Services() {
     <div className="flex justify-center items-center p-1">
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-3xl shadow-xl p-6 w-full max-w-3xl space-y-6"
+        className="bg-white rounded-3xl shadow-xl p-6 w-full max-w-3xl space-y-1"
       >
         <h1 className="text-2xl font-bold text-center text-gray-800">
           🎬 Services We Offer

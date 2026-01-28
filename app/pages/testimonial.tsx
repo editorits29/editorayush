@@ -57,7 +57,7 @@ export default function Testimonial() {
   });
 
   return (
-    <section className="w-full py-8 flex justify-center">
+    <section className="w-full py-1 flex justify-center">
       {/* BACKGROUND BOUNDARY */}
       <div className="relative w-full max-w-3xl px-6 py-8 rounded-3xl bg-gradient-to-b from-white via-pink-50 to-pink-100 overflow-hidden">
         {/* Header */}
