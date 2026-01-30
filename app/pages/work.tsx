@@ -147,13 +147,11 @@ export default function Work() {
         <div className="flex justify-center flex-col items-center gap-2">
           <div className="w-full flex justify-center gap-2 items-center text-center">
             <div className="h-3 w-3 rounded-full bg-pink-600"></div>
-            <p className="text-sm font-medium text-gray-600">
-              The Blue Print Of Creation
-            </p>
+            <p className="text-sm font-medium text-gray-600">Process</p>
           </div>
           <div className="text-lg text-left text-gray-600 w-full">
             <h1 className="text-black font-bold pb-2 text-3xl mb-4 text-center">
-              The Creation Loop
+              The Blue Print Of Creation
             </h1>
 
             <div className="relative">
@@ -194,13 +192,13 @@ export default function Work() {
                   },
                 ].map((item, index, array) => {
                   const isExchangeSection = item.title === "The Exchange";
-                  
+
                   return (
                     <div key={index} className="relative">
                       {isExchangeSection ? (
-                        <a 
-                          href="https://docs.google.com/forms/d/e/1FAIpQLSfdk8SlmjWLw5Wid3GRWXUfygG6j1XJpNNa44DmongInq1ZnA/viewform?usp=publish-editor" 
-                          target="_blank" 
+                        <a
+                          href="https://docs.google.com/forms/d/e/1FAIpQLSfdk8SlmjWLw5Wid3GRWXUfygG6j1XJpNNa44DmongInq1ZnA/viewform?usp=publish-editor"
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="block"
                         >
@@ -209,18 +207,18 @@ export default function Work() {
                               <div className="flex-shrink-0">
                                 {/* External link indicator */}
                                 <div className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  <svg 
-                                    xmlns="http://www.w3.org/2000/svg" 
-                                    fill="none" 
-                                    viewBox="0 0 24 24" 
-                                    strokeWidth="2" 
-                                    stroke="currentColor" 
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="2"
+                                    stroke="currentColor"
                                     className="w-5 h-5 text-pink-500"
                                   >
-                                    <path 
-                                      strokeLinecap="round" 
-                                      strokeLinejoin="round" 
-                                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" 
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
                                     />
                                   </svg>
                                 </div>
@@ -234,7 +232,9 @@ export default function Work() {
                                     Click to learn more →
                                   </span>
                                 </div>
-                                <p className="text-gray-700 mb-3">{item.desc}</p>
+                                <p className="text-gray-700 mb-3">
+                                  {item.desc}
+                                </p>
 
                                 {item.paymentMethods && (
                                   <div className="space-y-4 mt-4">
