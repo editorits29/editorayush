@@ -301,7 +301,7 @@ export default function Work() {
                         <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 z-10">
                           <div className="relative">
                             {/* Arrow line */}
-                            <div className="w-[2px] h-12 bg-gradient-to-b from-purple-500 to-pink-500 mx-auto"></div>
+                            <div className="w-[2px] h-4 bg-gradient-to-b from-purple-500 to-pink-500 mx-auto"></div>
 
                             {/* Arrow head */}
                             <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2">
