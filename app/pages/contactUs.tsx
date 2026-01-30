@@ -29,11 +29,6 @@ const faqs = [
     answer:
       "Simply contact us to schedule an initial consultation. We’ll discuss your needs, preferences, and any specific requirements for your video.",
   },
-  {
-    question: "What payment methods do you accept?",
-    answer:
-      "We accept UPI, PayPal, and bank transfers. Full payment details will be shared during the consultation.",
-  },
 ];
 
 export default function ContactUs() {

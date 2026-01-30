@@ -14,8 +14,42 @@ const navList = [
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [typedText, setTypedText] = useState("");
-  const fullText = "It's-EditorAyush.";
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(100);
+
+  // changed text
+  const fullText = "it's_editor_Ayush";
+
+  useEffect(() => {
+    const handleTyping = () => {
+      if (!isDeleting && displayText === fullText) {
+        setTimeout(() => setIsDeleting(true), 2000);
+        return;
+      }
+
+      if (isDeleting && displayText === "") {
+        setTimeout(() => {
+          setIsDeleting(false);
+          setTypingSpeed(300);
+        }, 50);
+        return;
+      }
+
+      const updatedText = isDeleting
+        ? fullText.substring(0, displayText.length - 1)
+        : fullText.substring(0, displayText.length + 1);
+
+      setDisplayText(updatedText);
+
+      if (isDeleting) {
+        setTypingSpeed(300);
+      }
+    };
+
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, typingSpeed, fullText]);
 
   const handleScroll = (id: string) => {
     const el = document.getElementById(id);
@@ -23,48 +57,35 @@ export default function NavBar() {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    let i = 0;
-    let isDeleting = false;
+  // split normal part and last 5 italic chars
+  const normalPart =
+    displayText.length > 5
+      ? displayText.slice(0, displayText.length - 5)
+      : displayText;
 
-    const interval = setInterval(() => {
-      if (!isDeleting) {
-        // Typing
-        setTypedText(fullText.slice(0, i + 1));
-        i++;
-
-        if (i === fullText.length) {
-          setTimeout(() => {
-            isDeleting = true;
-          }, 1200); // pause after full typing
-        }
-      } else {
-        // Deleting
-        setTypedText(fullText.slice(0, i - 1));
-        i--;
-
-        if (i === 0) {
-          isDeleting = false;
-        }
-      }
-    }, 100); // speed control
-
-    return () => clearInterval(interval);
-  }, []);
+  const italicPart =
+    displayText.length > 5
+      ? displayText.slice(displayText.length - 5)
+      : "";
 
   return (
     <nav className="w-full flex justify-center pb-1 py-2 sticky top-0 z-50">
       <div className="w-3xl px-4 bg-white/80 backdrop-blur-md shadow-md rounded-2xl relative">
         <div className="flex items-center justify-between py-3">
-          {/* Logo */}
-          <div className="tracking-wide">
-            <p className="font-creative text-xs font-bold text-gray-600">
-              {typedText.includes("It's-Editor") && "It's-Editor"}
-              <span className="font-serif text-base italic">
-                {typedText.replace("It's-Editor", "").replace(".", "")}
+          {/* Logo - Typing Animation */}
+          <div className="font-mono tracking-wide min-h-[30px] flex items-center">
+            <span className="text-sm md:text-base font-medium text-gray-800">
+              <span className="text-xs md:text-sm font-light text-gray-700">
+                {normalPart}
               </span>
-              {typedText.endsWith(".") && "."}
-            </p>
+              {italicPart && (
+                <span className="text-base md:text-lg font-semibold italic text-pink-600">
+                  {italicPart}
+                </span>
+              )}
+              {/* Blinking cursor */}
+              <span className="inline-block w-[2px] h-5 md:h-6 bg-pink-500 ml-1 animate-pulse"></span>
+            </span>
           </div>
 
           {/* Desktop / Tablet Menu */}
