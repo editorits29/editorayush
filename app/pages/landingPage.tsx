@@ -11,6 +11,9 @@ export default function LandingPage() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  // try webp first
+  const [bgSrc, setBgSrc] = useState("/23657879796.webp");
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -18,10 +21,7 @@ export default function LandingPage() {
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
-
-    return () => {
-      window.removeEventListener("resize", checkMobile);
-    };
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -66,31 +66,41 @@ export default function LandingPage() {
         onMouseLeave={handleMouseLeave}
         className="relative rounded-3xl px-8 py-6 shadow-lg border border-white/50 w-full max-w-3xl transition-transform duration-200 ease-out overflow-hidden flex flex-col min-h-[395px]"
       >
-        {/* Always-present gradient base */}
+        {/* base gradient always present */}
         <div className="absolute inset-0 -z-30 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900" />
 
-        {/* Background image layer */}
-        <div className="absolute inset-0 -z-20">
+        {/* background layer with CSS fallback */}
+        <div
+          className="absolute inset-0 -z-20 bg-cover bg-center"
+          style={{ backgroundImage: "url('/23657879796.jpg')" }} // guaranteed fallback
+        >
+          {/* next/image on top, fades in only when loaded */}
           <Image
-            src="/23657879796.webp"
+            src={bgSrc}
             alt="editor background"
             fill
             priority
             unoptimized
             className={`object-cover transition-opacity duration-700 ${
-              imageLoaded ? "opacity-100" : "opacity-90"
+              imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setImageLoaded(true)}
+            onError={() => {
+              // if webp really fails, switch to jpg source
+              if (bgSrc.endsWith(".webp")) {
+                setBgSrc("/23657879796.jpg");
+              }
+            }}
           />
 
-          {/* Overlay for readability */}
+          {/* dark overlay for readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
         </div>
 
-        {/* Soft glow */}
+        {/* soft glow */}
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-pink-200/10 via-purple-200/5 to-blue-200/10 blur-xl -z-10" />
 
-        {/* Main content */}
+        {/* main content */}
         <div className="relative z-10 flex flex-col items-start text-left space-y-6 flex-grow">
           <div className="space-y-4 max-w-lg">
             <div className="flex items-center gap-2 text-lg font-medium text-gray-200">
@@ -123,20 +133,18 @@ export default function LandingPage() {
               </button>
 
               {showAboutMe && (
-                <p className="mt-2 text-yellow-500 text-lg animate-fadeIn">
+                <p className="mt-2 text-yellow-500 text-lg">
                   I'm Ayush Kumar, a professional video editor based in India,
                   working with clients globally. I create high-quality,
-                  engaging videos for creators and brands, including short-form
-                  content and long-form edits. With a focus on creativity,
-                  clear communication, and on-time delivery, every project hits
-                  global standards and client expectations.
+                  engaging videos for creators and brands, both short-form and
+                  long-form, with clear communication and reliable delivery.
                 </p>
               )}
             </div>
           </div>
         </div>
 
-        {/* Customers */}
+        {/* customers */}
         <div className="relative z-10 mt-auto pt-8">
           <div className="flex gap-3 items-center">
             <div className="flex items-center">
