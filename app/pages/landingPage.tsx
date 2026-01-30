@@ -8,6 +8,7 @@ export default function LandingPage() {
   const cardRef = useRef<HTMLDivElement>(null);
   const [showAboutMe, setShowAboutMe] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -16,10 +17,17 @@ export default function LandingPage() {
       setIsMobile(window.innerWidth < 768);
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+    }
     
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', checkMobile);
+      }
+    };
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -63,39 +71,42 @@ export default function LandingPage() {
         onMouseLeave={handleMouseLeave}
         className="relative rounded-3xl px-8 py-6 shadow-lg border border-white/50 w-full max-w-3xl transition-transform duration-200 ease-out overflow-hidden flex flex-col min-h-[395px] bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900"
       >
-        {/* Optimized background image - Lazy loaded with blur placeholder */}
-        {!imageLoaded && (
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 animate-pulse" />
-        )}
-        
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src="/23657879796.webp"
-            alt="editor background"
-            fill
-            className={`object-cover transition-opacity duration-300 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            priority
-            quality={isMobile ? 75 : 85}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAGAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-            onLoad={() => {
-              console.log("Background image loaded successfully");
-              setImageLoaded(true);
-            }}
-            onError={(e) => {
-              console.error("Failed to load background image");
-              e.currentTarget.style.display = 'none';
-            }}
-          />
+        {/* Optimized background image - Fixed */}
+        <div className="absolute inset-0 -z-20">
+          {/* Fallback background that's always visible */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900" />
           
-          {/* Gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
+          {/* Background image */}
+          <div className="absolute inset-0">
+            <Image
+              src="/23657879796.webp"
+              alt="editor background"
+              fill
+              className={`object-cover transition-opacity duration-500 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+              priority
+              quality={isMobile ? 75 : 85}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAGAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+              onLoad={() => {
+                console.log("Background image loaded successfully");
+                setImageLoaded(true);
+              }}
+              onError={(e) => {
+                console.error("Failed to load background image");
+                setImageError(true);
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+          </div>
+          
+          {/* Gradient overlay for text readability - Now with fixed opacity */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
         </div>
 
-        {/* Soft glow overlay */}
+        {/* Soft glow overlay - Reduced z-index */}
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-pink-200/10 via-purple-200/5 to-blue-200/10 blur-xl -z-10" />
 
         {/* Main content area */}
@@ -133,7 +144,7 @@ export default function LandingPage() {
               </button>
               
               {showAboutMe && (
-                <p className="mt-2 text-gray-300 text-sm animate-fadeIn">
+                <p className="mt-2 text-yellow-500 text-shadow-sm text-shadow-voilet-100 text-lg animate-fadeIn">
                   I'm Ayush Kumar, a professional video editor based in India, working with clients globally. I create high-quality, engaging videos for creators and brands, including short-form content and long-form edits. With a focus on creativity, clear communication, and on-time delivery, I ensure every project meets global standards and client expectations.
                 </p>
               )}
@@ -192,17 +203,6 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
-      
-      {/* Add custom animation to tailwind.config.js if needed */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-5px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
-      `}</style>
     </div>
   );
 }
