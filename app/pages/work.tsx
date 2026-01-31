@@ -93,11 +93,12 @@ export default function Work() {
         {/* Header */}
         <div className="text-center">
           <div className="flex gap-3 items-center justify-center">
-            <div className="h-3 w-3 rounded-full bg-pink-600" />
+            <div className="h-3 w-3 rounded-full bg-pink-600 " />
             <p className="text-sm font-medium tracking-wide text-pink-500">
-              Our Signature Cuts & Creation's
+              Work
             </p>
           </div>
+	    <h1 className="text-lg text-black py-2 flex-block">Our Signature Cuts & Creation's</h1>
         </div>
 
         {/* CAROUSEL  Video Section*/}

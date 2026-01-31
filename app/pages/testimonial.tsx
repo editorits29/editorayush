@@ -75,7 +75,7 @@ export default function Testimonial() {
 
   return (
     <section className="w-full py-1 flex justify-center">
-      <div className="relative w-full max-w-3xl px-6 py-8 rounded-3xl bg-gradient-to-b from-gray-200 via-pink-50 to-pink-100 overflow-hidden">
+      <div className="relative w-full max-w-3xl px-6 py-2 rounded-3xl bg-gradient-to-b from-gray-200 via-pink-50 to-pink-100 overflow-hidden">
         {/* Header */}
         <div className="text-center mt-5 mb-8">
           <div className="flex gap-3 items-center justify-center">
